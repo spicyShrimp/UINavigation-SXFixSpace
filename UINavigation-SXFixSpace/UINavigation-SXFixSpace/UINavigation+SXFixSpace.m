@@ -46,17 +46,21 @@ static CGFloat sx_tempFixSpace = 0;
 @implementation UINavigationItem (SXFixSpace)
 
 +(void)load {
-    [self swizzleInstanceMethodWithOriginSel:@selector(setLeftBarButtonItem:)
-                                 swizzledSel:@selector(sx_setLeftBarButtonItem:)];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [self swizzleInstanceMethodWithOriginSel:@selector(setLeftBarButtonItem:)
+                                     swizzledSel:@selector(sx_setLeftBarButtonItem:)];
+        
+        [self swizzleInstanceMethodWithOriginSel:@selector(setLeftBarButtonItems:)
+                                     swizzledSel:@selector(sx_setLeftBarButtonItems:)];
+        
+        [self swizzleInstanceMethodWithOriginSel:@selector(setRightBarButtonItem:)
+                                     swizzledSel:@selector(sx_setRightBarButtonItem:)];
+        
+        [self swizzleInstanceMethodWithOriginSel:@selector(setRightBarButtonItems:)
+                                     swizzledSel:@selector(sx_setRightBarButtonItems:)];
+    });
     
-    [self swizzleInstanceMethodWithOriginSel:@selector(setLeftBarButtonItems:)
-                                 swizzledSel:@selector(sx_setLeftBarButtonItems:)];
-    
-    [self swizzleInstanceMethodWithOriginSel:@selector(setRightBarButtonItem:)
-                                 swizzledSel:@selector(sx_setRightBarButtonItem:)];
-    
-    [self swizzleInstanceMethodWithOriginSel:@selector(setRightBarButtonItems:)
-                                 swizzledSel:@selector(sx_setRightBarButtonItems:)];
 }
 
 -(void)sx_setLeftBarButtonItem:(UIBarButtonItem *)leftBarButtonItem {
