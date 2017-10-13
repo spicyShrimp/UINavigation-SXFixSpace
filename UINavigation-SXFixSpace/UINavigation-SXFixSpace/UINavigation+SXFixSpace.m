@@ -64,16 +64,22 @@ static CGFloat sx_tempFixSpace = 0;
 }
 
 -(void)sx_setLeftBarButtonItem:(UIBarButtonItem *)leftBarButtonItem {
-    if (leftBarButtonItem.customView) {
-        if (deviceVersion >= 11) {
+    if (deviceVersion >= 11) {
+        if (leftBarButtonItem.customView) {
             sx_tempFixSpace = 0;
             [self sx_setLeftBarButtonItem:leftBarButtonItem];
         } else {
-            [self setLeftBarButtonItems:@[leftBarButtonItem]];
+            sx_tempFixSpace = 20;
+            [self sx_setLeftBarButtonItem:leftBarButtonItem];
         }
     } else {
-        sx_tempFixSpace = 20;
-        [self sx_setLeftBarButtonItem:leftBarButtonItem];
+        if (leftBarButtonItem.customView) {
+            [self sx_setLeftBarButtonItem:nil];
+            [self setLeftBarButtonItems:@[leftBarButtonItem]];
+        } else {
+            [self sx_setLeftBarButtonItem:leftBarButtonItem];
+            [self setLeftBarButtonItems:nil];
+        }
     }
 }
 
@@ -84,16 +90,22 @@ static CGFloat sx_tempFixSpace = 0;
 }
 
 -(void)sx_setRightBarButtonItem:(UIBarButtonItem *)rightBarButtonItem{
-    if (rightBarButtonItem.customView) {
-        if (deviceVersion >= 11) {
+    if (deviceVersion >= 11) {
+        if (rightBarButtonItem.customView) {
             sx_tempFixSpace = 0;
             [self sx_setRightBarButtonItem:rightBarButtonItem];
         } else {
-            [self setRightBarButtonItems:@[rightBarButtonItem]];
+            sx_tempFixSpace = 20;
+            [self sx_setRightBarButtonItem:rightBarButtonItem];
         }
     } else {
-        sx_tempFixSpace = 20;
-        [self sx_setRightBarButtonItem:rightBarButtonItem];
+        if (rightBarButtonItem.customView) {
+            [self sx_setRightBarButtonItem:nil];
+            [self setRightBarButtonItems:@[rightBarButtonItem]];
+        } else {
+            [self sx_setRightBarButtonItem:rightBarButtonItem];
+            [self setRightBarButtonItems:nil];
+        }
     }
 }
 
