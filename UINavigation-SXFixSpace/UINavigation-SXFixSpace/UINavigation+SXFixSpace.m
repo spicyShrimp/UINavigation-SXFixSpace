@@ -77,16 +77,20 @@ static CGFloat sx_tempFixSpace = 0;
             [self sx_setLeftBarButtonItem:nil];
             [self setLeftBarButtonItems:@[leftBarButtonItem]];
         } else {
-            [self sx_setLeftBarButtonItem:leftBarButtonItem];
             [self setLeftBarButtonItems:nil];
+            [self sx_setLeftBarButtonItem:leftBarButtonItem];
         }
     }
 }
 
 -(void)sx_setLeftBarButtonItems:(NSArray<UIBarButtonItem *> *)leftBarButtonItems {
-    NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:sx_defaultFixSpace-20]];//可修正iOS11之前的偏移
-    [items addObjectsFromArray:leftBarButtonItems];
-    [self sx_setLeftBarButtonItems:items];
+    if (leftBarButtonItems.count) {
+        NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:sx_defaultFixSpace-20]];//可修正iOS11之前的偏移
+        [items addObjectsFromArray:leftBarButtonItems];
+        [self sx_setLeftBarButtonItems:items];
+    } else {
+        [self sx_setLeftBarButtonItems:leftBarButtonItems];
+    }
 }
 
 -(void)sx_setRightBarButtonItem:(UIBarButtonItem *)rightBarButtonItem{
@@ -103,16 +107,20 @@ static CGFloat sx_tempFixSpace = 0;
             [self sx_setRightBarButtonItem:nil];
             [self setRightBarButtonItems:@[rightBarButtonItem]];
         } else {
-            [self sx_setRightBarButtonItem:rightBarButtonItem];
             [self setRightBarButtonItems:nil];
+            [self sx_setRightBarButtonItem:rightBarButtonItem];
         }
     }
 }
 
 -(void)sx_setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)rightBarButtonItems{
-    NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:sx_defaultFixSpace-20]];//可修正iOS11之前的偏移
-    [items addObjectsFromArray:rightBarButtonItems];
-    [self sx_setRightBarButtonItems:items];
+    if (rightBarButtonItems.count) {
+        NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:sx_defaultFixSpace-20]];//可修正iOS11之前的偏移
+        [items addObjectsFromArray:rightBarButtonItems];
+        [self sx_setRightBarButtonItems:items];
+    } else {
+        [self sx_setRightBarButtonItems:rightBarButtonItems];
+    }
 }
 
 -(UIBarButtonItem *)fixedSpaceWithWidth:(CGFloat)width {
