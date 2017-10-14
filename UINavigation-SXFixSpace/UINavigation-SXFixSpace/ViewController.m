@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "UIBarButtonItem+SXCreate.h"
 
-@interface ViewController ()
+@interface ViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @end
 
@@ -30,6 +30,13 @@
     }
     
     [self configBarItem];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(100, 100, 100, 100);
+    btn.backgroundColor = [UIColor orangeColor];
+    [btn setTitle:@"进入相册" forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(intoAlbum) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn];
     
 }
 
@@ -78,4 +85,22 @@
 -(void)popAction{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+-(void)intoAlbum{
+    UIImagePickerController *pick = [[UIImagePickerController alloc]init];
+    pick.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    pick.delegate = self;
+    [self presentViewController:pick animated:YES completion:nil];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end
