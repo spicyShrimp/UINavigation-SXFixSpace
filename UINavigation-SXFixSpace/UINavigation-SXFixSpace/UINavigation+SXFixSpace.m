@@ -14,7 +14,32 @@
 #define deviceVersion [[[UIDevice currentDevice] systemVersion] floatValue]
 #endif
 
-static CGFloat sx_tempFixSpace = 0;
+static BOOL sx_disableFixSpace = NO;
+
+@implementation UIImagePickerController (SXFixSpace)
++(void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [self swizzleInstanceMethodWithOriginSel:@selector(viewWillAppear:)
+                                     swizzledSel:@selector(sx_viewWillAppear:)];
+        
+        [self swizzleInstanceMethodWithOriginSel:@selector(viewWillDisappear:)
+                                     swizzledSel:@selector(sx_viewWillDisappear:)];
+    });
+}
+
+
+-(void)sx_viewWillAppear:(BOOL)animated {
+    sx_disableFixSpace = YES;
+    [self sx_viewWillAppear:animated];
+}
+
+-(void)sx_viewWillDisappear:(BOOL)animated{
+    sx_disableFixSpace = NO;
+    [self sx_viewWillDisappear:animated];
+}
+
+@end
 
 @implementation UINavigationBar (SXFixSpace)
 
@@ -29,9 +54,9 @@ static CGFloat sx_tempFixSpace = 0;
 -(void)sx_layoutSubviews{
     [self sx_layoutSubviews];
     
-    if (deviceVersion >= 11) {
+    if (deviceVersion >= 11 && !sx_disableFixSpace) {
         self.layoutMargins = UIEdgeInsetsZero;
-        CGFloat space = sx_tempFixSpace !=0 ? sx_tempFixSpace : sx_defaultFixSpace;
+        CGFloat space = sx_defaultFixSpace;
         for (UIView *subview in self.subviews) {
             if ([NSStringFromClass(subview.class) containsString:@"ContentView"]) {
                 subview.layoutMargins = UIEdgeInsetsMake(0, space, 0, space);//可修正iOS11之后的偏移
@@ -65,15 +90,9 @@ static CGFloat sx_tempFixSpace = 0;
 
 -(void)sx_setLeftBarButtonItem:(UIBarButtonItem *)leftBarButtonItem {
     if (deviceVersion >= 11) {
-        if (leftBarButtonItem.customView) {
-            sx_tempFixSpace = 0;
-            [self sx_setLeftBarButtonItem:leftBarButtonItem];
-        } else {
-            sx_tempFixSpace = 20;
-            [self sx_setLeftBarButtonItem:leftBarButtonItem];
-        }
+        [self sx_setLeftBarButtonItem:leftBarButtonItem];
     } else {
-        if (leftBarButtonItem.customView) {
+        if (!sx_disableFixSpace && leftBarButtonItem) {
             [self sx_setLeftBarButtonItem:nil];
             [self setLeftBarButtonItems:@[leftBarButtonItem]];
         } else {
@@ -95,15 +114,9 @@ static CGFloat sx_tempFixSpace = 0;
 
 -(void)sx_setRightBarButtonItem:(UIBarButtonItem *)rightBarButtonItem{
     if (deviceVersion >= 11) {
-        if (rightBarButtonItem.customView) {
-            sx_tempFixSpace = 0;
-            [self sx_setRightBarButtonItem:rightBarButtonItem];
-        } else {
-            sx_tempFixSpace = 20;
-            [self sx_setRightBarButtonItem:rightBarButtonItem];
-        }
+        [self sx_setRightBarButtonItem:rightBarButtonItem];
     } else {
-        if (rightBarButtonItem.customView) {
+        if (!sx_disableFixSpace && rightBarButtonItem) {
             [self sx_setRightBarButtonItem:nil];
             [self setRightBarButtonItems:@[rightBarButtonItem]];
         } else {
