@@ -54,7 +54,7 @@ static BOOL sx_disableFixSpace = NO;
 -(void)sx_layoutSubviews{
     [self sx_layoutSubviews];
     
-    if (deviceVersion >= 11 && !sx_disableFixSpace) {
+    if (deviceVersion >= 11 && !sx_disableFixSpace) {//需要调节
         self.layoutMargins = UIEdgeInsetsZero;
         CGFloat space = sx_defaultFixSpace;
         for (UIView *subview in self.subviews) {
@@ -92,11 +92,9 @@ static BOOL sx_disableFixSpace = NO;
     if (deviceVersion >= 11) {
         [self sx_setLeftBarButtonItem:leftBarButtonItem];
     } else {
-        if (!sx_disableFixSpace && leftBarButtonItem) {
-            [self sx_setLeftBarButtonItem:nil];
+        if (!sx_disableFixSpace && leftBarButtonItem) {//存在按钮且需要调节
             [self setLeftBarButtonItems:@[leftBarButtonItem]];
-        } else {
-            [self setLeftBarButtonItems:nil];
+        } else {//不存在按钮,或者不需要调节
             [self sx_setLeftBarButtonItem:leftBarButtonItem];
         }
     }
@@ -116,11 +114,9 @@ static BOOL sx_disableFixSpace = NO;
     if (deviceVersion >= 11) {
         [self sx_setRightBarButtonItem:rightBarButtonItem];
     } else {
-        if (!sx_disableFixSpace && rightBarButtonItem) {
-            [self sx_setRightBarButtonItem:nil];
+        if (!sx_disableFixSpace && rightBarButtonItem) {//存在按钮且需要调节
             [self setRightBarButtonItems:@[rightBarButtonItem]];
-        } else {
-            [self setRightBarButtonItems:nil];
+        } else {//不存在按钮,或者不需要调节
             [self sx_setRightBarButtonItem:rightBarButtonItem];
         }
     }
