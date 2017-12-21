@@ -16,7 +16,11 @@
 
 static BOOL sx_disableFixSpace = NO;
 
-@implementation UIImagePickerController (SXFixSpace)
+
+static BOOL sx_tempDisableFixSpace = NO;
+static NSInteger sx_tempBehavior = 0;
+
+@implementation UINavigationController (SXFixSpace)
 +(void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -25,18 +29,80 @@ static BOOL sx_disableFixSpace = NO;
         
         [self swizzleInstanceMethodWithOriginSel:@selector(viewWillDisappear:)
                                      swizzledSel:@selector(sx_viewWillDisappear:)];
+        //FIXME:修正iOS11之后push或者pop动画为NO 系统不主动调用UINavigationBar的layoutSubviews方法
+        if (deviceVersion >= 11) {
+            [self swizzleInstanceMethodWithOriginSel:@selector(pushViewController:animated:)
+                                         swizzledSel:@selector(sx_pushViewController:animated:)];
+            
+            [self swizzleInstanceMethodWithOriginSel:@selector(popViewControllerAnimated:)
+                                         swizzledSel:@selector(sx_popViewControllerAnimated:)];
+            
+            [self swizzleInstanceMethodWithOriginSel:@selector(popToViewController:animated:)
+                                         swizzledSel:@selector(sx_popToViewController:animated:)];
+            
+            [self swizzleInstanceMethodWithOriginSel:@selector(popToRootViewControllerAnimated:)
+                                         swizzledSel:@selector(sx_popToRootViewControllerAnimated:)];
+            
+            [self swizzleInstanceMethodWithOriginSel:@selector(setViewControllers:animated:)
+                                         swizzledSel:@selector(sx_setViewControllers:animated:)];
+        }
     });
 }
 
 
 -(void)sx_viewWillAppear:(BOOL)animated {
-    sx_disableFixSpace = YES;
+    if ([self isKindOfClass:[UIImagePickerController class]]) {
+        sx_tempDisableFixSpace = sx_disableFixSpace;
+        sx_disableFixSpace = YES;
+#ifdef __IPHONE_11_0
+        if (@available(iOS 11.0, *)) {
+            sx_tempBehavior = [UIScrollView appearance].contentInsetAdjustmentBehavior;
+            [UIScrollView appearance].contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
+        }
+#endif
+    }
     [self sx_viewWillAppear:animated];
 }
 
 -(void)sx_viewWillDisappear:(BOOL)animated{
-    sx_disableFixSpace = NO;
+    if ([self isKindOfClass:[UIImagePickerController class]]) {
+        sx_disableFixSpace = sx_tempDisableFixSpace;
+#ifdef __IPHONE_11_0
+        if (@available(iOS 11.0, *)) {
+            [UIScrollView appearance].contentInsetAdjustmentBehavior = sx_tempBehavior;
+        }
+#endif
+    }
     [self sx_viewWillDisappear:animated];
+}
+
+//FIXME:修正iOS11之后push或者pop动画为NO 系统不主动调用UINavigationBar的layoutSubviews方法
+-(void)sx_pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    [self sx_pushViewController:viewController animated:animated];
+    [self.navigationBar layoutSubviews];
+}
+
+- (nullable UIViewController *)sx_popViewControllerAnimated:(BOOL)animated{
+    UIViewController *vc = [self sx_popViewControllerAnimated:animated];
+    [self.navigationBar layoutSubviews];
+    return vc;
+}
+
+- (nullable NSArray<__kindof UIViewController *> *)sx_popToViewController:(UIViewController *)viewController animated:(BOOL)animated{
+    NSArray *vcs = [self sx_popToViewController:viewController animated:animated];
+    [self.navigationBar layoutSubviews];
+    return vcs;
+}
+
+- (nullable NSArray<__kindof UIViewController *> *)sx_popToRootViewControllerAnimated:(BOOL)animated{
+    NSArray *vcs = [self sx_popToRootViewControllerAnimated:animated];
+    [self.navigationBar layoutSubviews];
+    return vcs;
+}
+
+- (void)sx_setViewControllers:(NSArray<UIViewController *> *)viewControllers animated:(BOOL)animated NS_AVAILABLE_IOS(3_0){
+    [self sx_setViewControllers:viewControllers animated:animated];
+    [self.navigationBar layoutSubviews];
 }
 
 @end
@@ -141,3 +207,4 @@ static BOOL sx_disableFixSpace = NO;
 }
 
 @end
+

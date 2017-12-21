@@ -79,11 +79,11 @@
 }
 
 -(void)pushAction{
-    [self.navigationController pushViewController:[ViewController new] animated:YES];
+    [self.navigationController pushViewController:[ViewController new] animated:arc4random_uniform(200) % 2 ? YES : NO];
 }
 
 -(void)popAction{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:arc4random_uniform(200) % 2 ? YES : NO];
 }
 
 -(void)intoAlbum{
