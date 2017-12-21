@@ -79,30 +79,40 @@ static NSInteger sx_tempBehavior = 0;
 //FIXME:修正iOS11之后push或者pop动画为NO 系统不主动调用UINavigationBar的layoutSubviews方法
 -(void)sx_pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     [self sx_pushViewController:viewController animated:animated];
-    [self.navigationBar layoutSubviews];
+    if (!animated) {
+        [self.navigationBar layoutSubviews];
+    }
 }
 
 - (nullable UIViewController *)sx_popViewControllerAnimated:(BOOL)animated{
     UIViewController *vc = [self sx_popViewControllerAnimated:animated];
-    [self.navigationBar layoutSubviews];
+    if (!animated) {
+        [self.navigationBar layoutSubviews];
+    }
     return vc;
 }
 
 - (nullable NSArray<__kindof UIViewController *> *)sx_popToViewController:(UIViewController *)viewController animated:(BOOL)animated{
     NSArray *vcs = [self sx_popToViewController:viewController animated:animated];
-    [self.navigationBar layoutSubviews];
+    if (!animated) {
+        [self.navigationBar layoutSubviews];
+    }
     return vcs;
 }
 
 - (nullable NSArray<__kindof UIViewController *> *)sx_popToRootViewControllerAnimated:(BOOL)animated{
     NSArray *vcs = [self sx_popToRootViewControllerAnimated:animated];
-    [self.navigationBar layoutSubviews];
+    if (!animated) {
+        [self.navigationBar layoutSubviews];
+    }
     return vcs;
 }
 
 - (void)sx_setViewControllers:(NSArray<UIViewController *> *)viewControllers animated:(BOOL)animated NS_AVAILABLE_IOS(3_0){
     [self sx_setViewControllers:viewControllers animated:animated];
-    [self.navigationBar layoutSubviews];
+    if (!animated) {
+        [self.navigationBar layoutSubviews];
+    }
 }
 
 @end
