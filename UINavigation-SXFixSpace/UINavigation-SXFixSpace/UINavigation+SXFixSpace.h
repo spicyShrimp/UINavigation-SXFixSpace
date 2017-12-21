@@ -12,7 +12,7 @@
 #define sx_defaultFixSpace 8
 #endif
 
-@interface UIImagePickerController (SXFixSpace)
+@interface UINavigationController (SXFixSpace)
 @end
 
 @interface UINavigationBar (SXFixSpace)

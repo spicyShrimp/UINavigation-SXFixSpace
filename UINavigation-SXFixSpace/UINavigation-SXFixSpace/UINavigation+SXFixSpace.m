@@ -16,7 +16,6 @@
 
 static BOOL sx_disableFixSpace = NO;
 
-
 static BOOL sx_tempDisableFixSpace = NO;
 static NSInteger sx_tempBehavior = 0;
 
