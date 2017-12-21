@@ -9,6 +9,7 @@
 #import "UINavigation+SXFixSpace.h"
 #import "NSObject+SXRuntime.h"
 #import <UIKit/UIKit.h>
+#import <Availability.h>
 
 #ifndef deviceVersion
 #define deviceVersion [[[UIDevice currentDevice] systemVersion] floatValue]
