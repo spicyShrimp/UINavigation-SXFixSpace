@@ -18,7 +18,6 @@
 static BOOL sx_disableFixSpace = NO;
 
 static BOOL sx_tempDisableFixSpace = NO;
-static NSInteger sx_tempBehavior = 0;
 
 @implementation UINavigationController (SXFixSpace)
 +(void)load {
@@ -54,12 +53,6 @@ static NSInteger sx_tempBehavior = 0;
     if ([self isKindOfClass:[UIImagePickerController class]]) {
         sx_tempDisableFixSpace = sx_disableFixSpace;
         sx_disableFixSpace = YES;
-#ifdef __IPHONE_11_0
-        if (@available(iOS 11.0, *)) {
-            sx_tempBehavior = [UIScrollView appearance].contentInsetAdjustmentBehavior;
-            [UIScrollView appearance].contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
-        }
-#endif
     }
     [self sx_viewWillAppear:animated];
 }
@@ -67,11 +60,6 @@ static NSInteger sx_tempBehavior = 0;
 -(void)sx_viewWillDisappear:(BOOL)animated{
     if ([self isKindOfClass:[UIImagePickerController class]]) {
         sx_disableFixSpace = sx_tempDisableFixSpace;
-#ifdef __IPHONE_11_0
-        if (@available(iOS 11.0, *)) {
-            [UIScrollView appearance].contentInsetAdjustmentBehavior = sx_tempBehavior;
-        }
-#endif
     }
     [self sx_viewWillDisappear:animated];
 }
