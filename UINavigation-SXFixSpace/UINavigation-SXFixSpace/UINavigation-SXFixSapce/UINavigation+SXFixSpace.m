@@ -11,9 +11,30 @@
 #import <UIKit/UIKit.h>
 #import <Availability.h>
 
-#ifndef deviceVersion
-#define deviceVersion [[[UIDevice currentDevice] systemVersion] floatValue]
+#ifndef sx_deviceVersion
+#define sx_deviceVersion [[[UIDevice currentDevice] systemVersion] floatValue]
 #endif
+
+@implementation UINavigationConfig
+
++(instancetype)shared {
+    static UINavigationConfig *config;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        config = [[self alloc] init];
+    });
+    return config;
+}
+
+-(instancetype)init{
+    self = [super init];
+    if (self) {
+        self.sx_defaultFixSpace = 8;//默认距离item距离两端的间距,可以修改
+    }
+    return self;
+}
+
+@end
 
 static BOOL sx_disableFixSpace = NO;
 
@@ -29,7 +50,7 @@ static BOOL sx_tempDisableFixSpace = NO;
         [self swizzleInstanceMethodWithOriginSel:@selector(viewWillDisappear:)
                                      swizzledSel:@selector(sx_viewWillDisappear:)];
         //FIXME:修正iOS11之后push或者pop动画为NO 系统不主动调用UINavigationBar的layoutSubviews方法
-        if (deviceVersion >= 11) {
+        if (sx_deviceVersion >= 11) {
             [self swizzleInstanceMethodWithOriginSel:@selector(pushViewController:animated:)
                                          swizzledSel:@selector(sx_pushViewController:animated:)];
             
@@ -118,9 +139,9 @@ static BOOL sx_tempDisableFixSpace = NO;
 -(void)sx_layoutSubviews{
     [self sx_layoutSubviews];
     
-    if (deviceVersion >= 11 && !sx_disableFixSpace) {//需要调节
+    if (sx_deviceVersion >= 11 && !sx_disableFixSpace) {//需要调节
         self.layoutMargins = UIEdgeInsetsZero;
-        CGFloat space = sx_defaultFixSpace;
+        CGFloat space = [UINavigationConfig shared].sx_defaultFixSpace;
         for (UIView *subview in self.subviews) {
             if ([NSStringFromClass(subview.class) containsString:@"ContentView"]) {
                 subview.layoutMargins = UIEdgeInsetsMake(0, space, 0, space);//可修正iOS11之后的偏移
@@ -153,7 +174,7 @@ static BOOL sx_tempDisableFixSpace = NO;
 }
 
 -(void)sx_setLeftBarButtonItem:(UIBarButtonItem *)leftBarButtonItem {
-    if (deviceVersion >= 11) {
+    if (sx_deviceVersion >= 11) {
         [self sx_setLeftBarButtonItem:leftBarButtonItem];
     } else {
         if (!sx_disableFixSpace && leftBarButtonItem) {//存在按钮且需要调节
@@ -166,7 +187,7 @@ static BOOL sx_tempDisableFixSpace = NO;
 
 -(void)sx_setLeftBarButtonItems:(NSArray<UIBarButtonItem *> *)leftBarButtonItems {
     if (leftBarButtonItems.count) {
-        NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:sx_defaultFixSpace-20]];//可修正iOS11之前的偏移
+        NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_defaultFixSpace-20]];//可修正iOS11之前的偏移
         [items addObjectsFromArray:leftBarButtonItems];
         [self sx_setLeftBarButtonItems:items];
     } else {
@@ -175,7 +196,7 @@ static BOOL sx_tempDisableFixSpace = NO;
 }
 
 -(void)sx_setRightBarButtonItem:(UIBarButtonItem *)rightBarButtonItem{
-    if (deviceVersion >= 11) {
+    if (sx_deviceVersion >= 11) {
         [self sx_setRightBarButtonItem:rightBarButtonItem];
     } else {
         if (!sx_disableFixSpace && rightBarButtonItem) {//存在按钮且需要调节
@@ -188,7 +209,7 @@ static BOOL sx_tempDisableFixSpace = NO;
 
 -(void)sx_setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)rightBarButtonItems{
     if (rightBarButtonItems.count) {
-        NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:sx_defaultFixSpace-20]];//可修正iOS11之前的偏移
+        NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_defaultFixSpace-20]];//可修正iOS11之前的偏移
         [items addObjectsFromArray:rightBarButtonItems];
         [self sx_setRightBarButtonItems:items];
     } else {

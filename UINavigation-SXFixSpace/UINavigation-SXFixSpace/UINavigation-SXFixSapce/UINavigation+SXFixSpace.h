@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-#ifndef sx_defaultFixSpace
-#define sx_defaultFixSpace 8
-#endif
+@interface UINavigationConfig: NSObject
+
++ (instancetype)shared;
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
+
+@property(nonatomic, assign)CGFloat sx_defaultFixSpace;//默认距离两端的间距,可以修改,
+
+@end
 
 @interface UINavigationController (SXFixSpace)
 @end

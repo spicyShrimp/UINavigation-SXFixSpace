@@ -13,7 +13,6 @@
 		5683AFBC1F8DD506004055EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5683AFBB1F8DD506004055EF /* Assets.xcassets */; };
 		5683AFBF1F8DD506004055EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5683AFBD1F8DD506004055EF /* LaunchScreen.storyboard */; };
 		5683AFC21F8DD506004055EF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5683AFC11F8DD506004055EF /* main.m */; };
-		5683AFD01F8DD521004055EF /* UINavigationController+SXFullScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 5683AFC81F8DD520004055EF /* UINavigationController+SXFullScreen.m */; };
 		5683AFD11F8DD521004055EF /* UINavigation+SXFixSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 5683AFC91F8DD520004055EF /* UINavigation+SXFixSpace.m */; };
 		5683AFD21F8DD521004055EF /* NSObject+SXRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5683AFCC1F8DD520004055EF /* NSObject+SXRuntime.m */; };
 		5683AFD31F8DD521004055EF /* UIBarButtonItem+SXCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5683AFCE1F8DD521004055EF /* UIBarButtonItem+SXCreate.m */; };
@@ -30,9 +29,7 @@
 		5683AFBE1F8DD506004055EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5683AFC01F8DD506004055EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5683AFC11F8DD506004055EF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5683AFC81F8DD520004055EF /* UINavigationController+SXFullScreen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+SXFullScreen.m"; sourceTree = "<group>"; };
 		5683AFC91F8DD520004055EF /* UINavigation+SXFixSpace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigation+SXFixSpace.m"; sourceTree = "<group>"; };
-		5683AFCA1F8DD520004055EF /* UINavigationController+SXFullScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+SXFullScreen.h"; sourceTree = "<group>"; };
 		5683AFCB1F8DD520004055EF /* NSObject+SXRuntime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+SXRuntime.h"; sourceTree = "<group>"; };
 		5683AFCC1F8DD520004055EF /* NSObject+SXRuntime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SXRuntime.m"; sourceTree = "<group>"; };
 		5683AFCD1F8DD521004055EF /* UINavigation+SXFixSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigation+SXFixSpace.h"; sourceTree = "<group>"; };
@@ -51,6 +48,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5627EED5208990840093E9F9 /* UINavigation-SXFixSapce */ = {
+			isa = PBXGroup;
+			children = (
+				5683AFCB1F8DD520004055EF /* NSObject+SXRuntime.h */,
+				5683AFCC1F8DD520004055EF /* NSObject+SXRuntime.m */,
+				5683AFCD1F8DD521004055EF /* UINavigation+SXFixSpace.h */,
+				5683AFC91F8DD520004055EF /* UINavigation+SXFixSpace.m */,
+			);
+			path = "UINavigation-SXFixSapce";
+			sourceTree = "<group>";
+		};
 		5683AFA61F8DD506004055EF = {
 			isa = PBXGroup;
 			children = (
@@ -70,14 +78,9 @@
 		5683AFB11F8DD506004055EF /* UINavigation-SXFixSpace */ = {
 			isa = PBXGroup;
 			children = (
-				5683AFCB1F8DD520004055EF /* NSObject+SXRuntime.h */,
-				5683AFCC1F8DD520004055EF /* NSObject+SXRuntime.m */,
+				5627EED5208990840093E9F9 /* UINavigation-SXFixSapce */,
 				5683AFCF1F8DD521004055EF /* UIBarButtonItem+SXCreate.h */,
 				5683AFCE1F8DD521004055EF /* UIBarButtonItem+SXCreate.m */,
-				5683AFCD1F8DD521004055EF /* UINavigation+SXFixSpace.h */,
-				5683AFC91F8DD520004055EF /* UINavigation+SXFixSpace.m */,
-				5683AFCA1F8DD520004055EF /* UINavigationController+SXFullScreen.h */,
-				5683AFC81F8DD520004055EF /* UINavigationController+SXFullScreen.m */,
 				5683AFB21F8DD506004055EF /* AppDelegate.h */,
 				5683AFB31F8DD506004055EF /* AppDelegate.m */,
 				5683AFB51F8DD506004055EF /* ViewController.h */,
@@ -168,7 +171,6 @@
 				5683AFC21F8DD506004055EF /* main.m in Sources */,
 				5683AFD31F8DD521004055EF /* UIBarButtonItem+SXCreate.m in Sources */,
 				5683AFB41F8DD506004055EF /* AppDelegate.m in Sources */,
-				5683AFD01F8DD521004055EF /* UINavigationController+SXFullScreen.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
