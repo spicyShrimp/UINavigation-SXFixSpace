@@ -7,6 +7,7 @@
 //
 
 #import "NSObject+SXRuntime.h"
+#import <objc/runtime.h>
 
 char * const kProtectCrashProtectorName = "kProtectCrashProtector";
 

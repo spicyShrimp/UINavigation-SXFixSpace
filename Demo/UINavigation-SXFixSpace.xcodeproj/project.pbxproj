@@ -60,16 +60,16 @@
 		563262642089A6C400F2B455 /* UINavigation-SXFixSpace */ = {
 			isa = PBXGroup;
 			children = (
-				563262652089A6C400F2B455 /* UINavigationBar+SXFixSpace.m */,
-				563262662089A6C400F2B455 /* UINavigationItem+SXFixSpace.m */,
-				563262672089A6C400F2B455 /* UINavigationController+SXFixSpace.h */,
 				563262682089A6C400F2B455 /* NSObject+SXRuntime.h */,
-				563262692089A6C400F2B455 /* UINavigationConfig.m */,
+				5632626E2089A6C400F2B455 /* NSObject+SXRuntime.m */,
 				5632626A2089A6C400F2B455 /* UINavigationBar+SXFixSpace.h */,
+				563262652089A6C400F2B455 /* UINavigationBar+SXFixSpace.m */,
+				5632626D2089A6C400F2B455 /* UINavigationConfig.h */,
+				563262692089A6C400F2B455 /* UINavigationConfig.m */,
+				563262672089A6C400F2B455 /* UINavigationController+SXFixSpace.h */,
 				5632626B2089A6C400F2B455 /* UINavigationController+SXFixSpace.m */,
 				5632626C2089A6C400F2B455 /* UINavigationItem+SXFixSpace.h */,
-				5632626D2089A6C400F2B455 /* UINavigationConfig.h */,
-				5632626E2089A6C400F2B455 /* NSObject+SXRuntime.m */,
+				563262662089A6C400F2B455 /* UINavigationItem+SXFixSpace.m */,
 			);
 			name = "UINavigation-SXFixSpace";
 			path = "../../UINavigation-SXFixSpace";

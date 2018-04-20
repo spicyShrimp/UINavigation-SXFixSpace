@@ -8,6 +8,7 @@
 
 #import "UINavigationController+SXFixSpace.h"
 #import "UINavigationConfig.h"
+#import <UIKit/UIImagePickerController.h>
 #import "NSObject+SXRuntime.h"
 
 #ifndef sx_deviceVersion

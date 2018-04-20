@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UINavigationConfig.h"
 
 @interface UINavigationBar (SXFixSpace)
 
