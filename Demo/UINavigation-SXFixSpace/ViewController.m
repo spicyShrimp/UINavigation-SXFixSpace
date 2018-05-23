@@ -19,6 +19,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    
+    //iOS11大标题导航栏开启
+    if (@available(iOS 11.0, *)) {
+        self.navigationController.navigationBar.prefersLargeTitles = YES;
+        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAutomatic;
+    }
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
     if (self.navigationController.viewControllers.count % 2) {
@@ -26,7 +33,7 @@
         view.backgroundColor = [UIColor redColor];
         self.navigationItem.titleView = view;
     } else {
-        self.navigationItem.title = [@(self.navigationController.viewControllers.count) stringValue];
+        self.navigationItem.title = [@(self.navigationController.viewControllers.count * 1111111111111) stringValue];
     }
     
     [self configBarItem];

@@ -27,7 +27,7 @@
 -(void)sx_layoutSubviews{
     [self sx_layoutSubviews];
     if (sx_deviceVersion >= 11 && ![UINavigationConfig shared].sx_disableFixSpace) {//需要调节
-        self.layoutMargins = UIEdgeInsetsZero;
+//        self.layoutMargins = UIEdgeInsetsZero;
         CGFloat space = [UINavigationConfig shared].sx_defaultFixSpace;
         for (UIView *subview in self.subviews) {
             if ([NSStringFromClass(subview.class) containsString:@"ContentView"]) {
