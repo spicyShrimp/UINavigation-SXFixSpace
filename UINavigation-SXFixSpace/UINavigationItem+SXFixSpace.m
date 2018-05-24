@@ -47,7 +47,7 @@
 }
 
 -(void)sx_setLeftBarButtonItems:(NSArray<UIBarButtonItem *> *)leftBarButtonItems {
-    if (leftBarButtonItems.count) {
+    if (leftBarButtonItems.count  && sx_deviceVersion >= 11) {
         NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_defaultFixSpace-20]];//可修正iOS11之前的偏移
         [items addObjectsFromArray:leftBarButtonItems];
         [self sx_setLeftBarButtonItems:items];
@@ -69,7 +69,7 @@
 }
 
 -(void)sx_setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)rightBarButtonItems{
-    if (rightBarButtonItems.count) {
+    if (rightBarButtonItems.count && sx_deviceVersion >= 11) {
         NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_defaultFixSpace-20]];//可修正iOS11之前的偏移
         [items addObjectsFromArray:rightBarButtonItems];
         [self sx_setRightBarButtonItems:items];
