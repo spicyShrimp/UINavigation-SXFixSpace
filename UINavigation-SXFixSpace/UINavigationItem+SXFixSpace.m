@@ -75,7 +75,7 @@
                 return;
             }
             
-            NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_defaultFixSpace-20]];//可修正iOS11之前的偏移
+            NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_fixedSpaceWidth]];//可修正iOS11之前的偏移
             [items addObjectsFromArray:leftBarButtonItems];
             [self sx_setLeftBarButtonItems:items];
         } else {
@@ -110,7 +110,7 @@
                 [self sx_setLeftBarButtonItems:leftBarButtonItems animated:animated];
                 return;
             }
-            NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_defaultFixSpace-20]];//可修正iOS11之前的偏移
+            NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_fixedSpaceWidth]];//可修正iOS11之前的偏移
             [items addObjectsFromArray:leftBarButtonItems];
             [self sx_setLeftBarButtonItems:items animated:animated];
         } else {
@@ -145,7 +145,7 @@
                 [self sx_setRightBarButtonItems:rightBarButtonItems];
                 return;
             }
-            NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_defaultFixSpace-20]];//可修正iOS11之前的偏移
+            NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_fixedSpaceWidth]];//可修正iOS11之前的偏移
             [items addObjectsFromArray:rightBarButtonItems];
             [self sx_setRightBarButtonItems:items];
         } else {
@@ -180,7 +180,7 @@
                 [self sx_setRightBarButtonItems:rightBarButtonItems animated:animated];
                 return;
             }
-            NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_defaultFixSpace-20]];//可修正iOS11之前的偏移
+            NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_fixedSpaceWidth]];//可修正iOS11之前的偏移
             [items addObjectsFromArray:rightBarButtonItems];
             [self sx_setRightBarButtonItems:items animated:animated];
         } else {
