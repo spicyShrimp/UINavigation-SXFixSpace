@@ -156,7 +156,7 @@
 
 - (void)sx_setRightBarButtonItem:(UIBarButtonItem *)rightBarButtonItem animated:(BOOL)animated {
     if (sx_deviceVersion >= 11) {
-        [self sx_setRightBarButtonItem:rightBarButtonItem];
+        [self sx_setRightBarButtonItem:rightBarButtonItem animated:animated];
     } else {
         if (![UINavigationConfig shared].sx_disableFixSpace && rightBarButtonItem) {//存在按钮且需要调节
             [self setRightBarButtonItems:@[rightBarButtonItem] animated:animated];
