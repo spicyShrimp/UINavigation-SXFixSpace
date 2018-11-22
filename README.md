@@ -3,7 +3,7 @@
 
 添加支持cocoapods,
 
-pod "UINavigation-SXFixSpace", "~> 1.0.8"
+pod "UINavigation-SXFixSpace", "~> 1.0.9"
 
 Swift版本:
 https://github.com/spicyShrimp/UINavigation-SXFixSpace-Swift
