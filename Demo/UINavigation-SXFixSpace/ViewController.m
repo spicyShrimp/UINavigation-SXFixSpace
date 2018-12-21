@@ -20,12 +20,12 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     
-    //iOS11大标题导航栏开启
-    if (@available(iOS 11.0, *)) {
-        self.navigationController.navigationBar.prefersLargeTitles = YES;
-        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAutomatic;
-    }
-    
+//    //iOS11大标题导航栏开启
+//    if (@available(iOS 11.0, *)) {
+//        self.navigationController.navigationBar.prefersLargeTitles = YES;
+//        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAutomatic;
+//    }
+//
     self.view.backgroundColor = [UIColor whiteColor];
     
     if (self.navigationController.viewControllers.count % 2) {
