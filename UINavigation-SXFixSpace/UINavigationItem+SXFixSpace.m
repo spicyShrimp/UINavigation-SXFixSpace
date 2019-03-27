@@ -120,6 +120,9 @@
 }
 
 -(void)sx_setRightBarButtonItem:(UIBarButtonItem *)rightBarButtonItem{
+    
+    [self standardFontSizeWithItems:@[rightBarButtonItem]];
+    
     if (sx_deviceVersion >= 11) {
         [self sx_setRightBarButtonItem:rightBarButtonItem];
     } else {
@@ -132,6 +135,9 @@
 }
 
 -(void)sx_setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)rightBarButtonItems{
+    
+    [self standardFontSizeWithItems:rightBarButtonItems];
+    
     if (sx_deviceVersion >= 11) {
         [self sx_setRightBarButtonItems:rightBarButtonItems];
     } else {
@@ -155,6 +161,9 @@
 }
 
 - (void)sx_setRightBarButtonItem:(UIBarButtonItem *)rightBarButtonItem animated:(BOOL)animated {
+    
+    [self standardFontSizeWithItems:@[rightBarButtonItem]];
+    
     if (sx_deviceVersion >= 11) {
         [self sx_setRightBarButtonItem:rightBarButtonItem animated:animated];
     } else {
@@ -167,6 +176,9 @@
 }
 
 - (void)sx_setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)rightBarButtonItems animated:(BOOL)animated {
+    
+    [self standardFontSizeWithItems:rightBarButtonItems];
+    
     if (sx_deviceVersion >= 11) {
         [self sx_setRightBarButtonItems:rightBarButtonItems animated:animated];
     } else {
@@ -195,6 +207,31 @@
                                                                                action:nil];
     fixedSpace.width = width;
     return fixedSpace;
+}
+
+- (void)standardFontSizeWithItems:(NSArray <UIBarButtonItem *>*)items {
+    [items enumerateObjectsUsingBlock:^(UIBarButtonItem * _Nonnull barButtonItem, NSUInteger idx, BOOL * _Nonnull stop) {
+        UIFont *font = [UINavigationConfig shared].sx_rightBarItemTextFont;
+        CGFloat width = [UINavigationConfig shared].sx_rightBarItemMiniWidth;
+        if ([barButtonItem.customView isKindOfClass:[UIButton class]]) {
+            UIButton *btn = barButtonItem.customView;
+            if (btn.currentTitle.length > 0) {
+                btn.titleLabel.font = font;
+                CGSize labelSize = [btn.currentTitle sizeWithAttributes:@{NSFontAttributeName:font}];
+                if (btn.frame.size.width < width) {
+                    CGRect frame = btn.frame;
+                    frame.size.width = width;
+                    btn.frame = frame;
+                }
+                btn.titleEdgeInsets = UIEdgeInsetsMake(0, (btn.frame.size.width - labelSize.width)/2, 0, 0);
+            }
+        }
+        else {
+            if (barButtonItem.title.length > 0) {
+                [barButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName, nil] forState:UIControlStateNormal];
+            }
+        }
+    }];
 }
 
 @end

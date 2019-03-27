@@ -20,4 +20,7 @@
 @property(nonatomic, assign)CGFloat sx_fixedSpaceWidth;//iOS11之前调整间距,默认为-20,
 @property(nonatomic, assign)BOOL sx_disableFixSpace;//是否禁止使用修正,默认为NO
 
+@property(nonatomic, assign) UIFont *sx_rightBarItemTextFont;
+@property(nonatomic, assign) CGFloat sx_rightBarItemMiniWidth;//针对customview,可点击的最小宽度
+
 @end

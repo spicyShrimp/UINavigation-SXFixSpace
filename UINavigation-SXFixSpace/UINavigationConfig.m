@@ -31,6 +31,8 @@
     self.sx_defaultFixSpace = 0.f;
     self.sx_fixedSpaceWidth = -20.f;
     self.sx_disableFixSpace = NO;
+    self.sx_rightBarItemTextFont = [UIFont systemFontOfSize:15];
+    self.sx_rightBarItemMiniWidth = 30.f;
 }
 
 @end
