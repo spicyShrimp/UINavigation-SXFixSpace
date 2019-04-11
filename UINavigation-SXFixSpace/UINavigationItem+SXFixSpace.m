@@ -29,7 +29,6 @@
                                             @"setRightBarButtonItem:animated:",
                                             @"setRightBarButtonItems:",
                                             @"setRightBarButtonItems:animated:",
-                                            @"initWithBarButtonSystemItem:target:action:"
                                             ];
             
             [oriSels enumerateObjectsUsingBlock:^(NSString * _Nonnull oriSel, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -62,7 +61,7 @@
 -(void)sx_setLeftBarButtonItems:(NSArray<UIBarButtonItem *> *)leftBarButtonItems animated:(BOOL)animated {
     if (leftBarButtonItems.count) {
         UIBarButtonItem *firstItem = leftBarButtonItems.firstObject;
-        if (firstItem.tag == UIBarButtonSystemItemFixedSpace) {//已经存在space
+        if (firstItem.width == sx_fixedSpaceWidth) {//已经存在space
             [self sx_setLeftBarButtonItems:leftBarButtonItems animated:animated];
         } else {
             NSMutableArray *items = [NSMutableArray arrayWithArray:leftBarButtonItems];
@@ -93,7 +92,7 @@
 - (void)sx_setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)rightBarButtonItems animated:(BOOL)animated {
     if (rightBarButtonItems.count) {
         UIBarButtonItem *firstItem = rightBarButtonItems.firstObject;
-        if (firstItem.tag == UIBarButtonSystemItemFixedSpace) {//已经存在space
+        if (firstItem.width == sx_fixedSpaceWidth) {//已经存在space
             [self sx_setRightBarButtonItems:rightBarButtonItems animated:animated];
         } else {
             NSMutableArray *items = [NSMutableArray arrayWithArray:rightBarButtonItems];
@@ -103,14 +102,6 @@
     } else {
         [self sx_setRightBarButtonItems:rightBarButtonItems animated:animated];
     }
-}
-
-- (UIBarButtonItem *)sx_initWithBarButtonSystemItem:(UIBarButtonSystemItem)systemItem target:(nullable id)target action:(nullable SEL)action {
-    UIBarButtonItem *item = [self sx_initWithBarButtonSystemItem:systemItem target:target action:action];
-    if (systemItem == UIBarButtonSystemItemFixedSpace) {
-        item.tag = UIBarButtonSystemItemFixedSpace;
-    }
-    return item;
 }
 
 -(UIBarButtonItem *)fixedSpaceWithWidth:(CGFloat)width {
