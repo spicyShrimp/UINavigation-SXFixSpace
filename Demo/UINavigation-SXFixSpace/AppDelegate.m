@@ -18,8 +18,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [UINavigationConfig shared].sx_disableFixSpace = NO;//默认为NO  可以修改
-    [UINavigationConfig shared].sx_defaultFixSpace = 0;//默认为0 可以修改
+    sx_disableFixSpace = NO;//默认为NO  可以修改
+    sx_defaultFixSpace = 0;//默认为0 可以修改
     return YES;
 }
 

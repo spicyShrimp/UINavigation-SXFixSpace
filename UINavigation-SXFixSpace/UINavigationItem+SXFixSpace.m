@@ -10,183 +10,107 @@
 #import "NSObject+SXRuntime.h"
 #import "UINavigationConfig.h"
 
-#ifndef sx_deviceVersion
-#define sx_deviceVersion [[[UIDevice currentDevice] systemVersion] floatValue]
-#endif
-
 @implementation UINavigationItem (SXFixSpace)
 
+
+
 +(void)load {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [self swizzleInstanceMethodWithOriginSel:@selector(setLeftBarButtonItem:)
-                                     swizzledSel:@selector(sx_setLeftBarButtonItem:)];
+    if (@available(iOS 11.0, *)) {
         
-        [self swizzleInstanceMethodWithOriginSel:@selector(setLeftBarButtonItems:)
-                                     swizzledSel:@selector(sx_setLeftBarButtonItems:)];
-        
-        [self swizzleInstanceMethodWithOriginSel:@selector(setLeftBarButtonItem:animated:)
-                                     swizzledSel:@selector(sx_setLeftBarButtonItem:animated:)];
-        
-        [self swizzleInstanceMethodWithOriginSel:@selector(setLeftBarButtonItems:animated:)
-                                     swizzledSel:@selector(sx_setLeftBarButtonItems:animated:)];
-
-        [self swizzleInstanceMethodWithOriginSel:@selector(setRightBarButtonItem:)
-                                     swizzledSel:@selector(sx_setRightBarButtonItem:)];
-        
-        [self swizzleInstanceMethodWithOriginSel:@selector(setRightBarButtonItems:)
-                                     swizzledSel:@selector(sx_setRightBarButtonItems:)];
-        
-        [self swizzleInstanceMethodWithOriginSel:@selector(setRightBarButtonItem:animated:)
-                                     swizzledSel:@selector(sx_setRightBarButtonItem:animated:)];
-        
-        [self swizzleInstanceMethodWithOriginSel:@selector(setRightBarButtonItems:animated:)
-                                     swizzledSel:@selector(sx_setRightBarButtonItems:animated:)];
-
-    });
-    
+    } else {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            NSArray <NSString *>*oriSels = @[
+                                            @"setLeftBarButtonItem:",
+                                            @"setLeftBarButtonItem:animated:",
+                                            @"setLeftBarButtonItems:",
+                                            @"setLeftBarButtonItems:animated:",
+                                            @"setRightBarButtonItem:",
+                                            @"setRightBarButtonItem:animated:",
+                                            @"setRightBarButtonItems:",
+                                            @"setRightBarButtonItems:animated:",
+                                            @"initWithBarButtonSystemItem:target:action:"
+                                            ];
+            
+            [oriSels enumerateObjectsUsingBlock:^(NSString * _Nonnull oriSel, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSString *swiSel = [NSString stringWithFormat:@"sx_%@", oriSel];
+                [self swizzleInstanceMethodWithOriginSel:NSSelectorFromString(oriSel)
+                                             swizzledSel:NSSelectorFromString(swiSel)];
+            }];
+            
+        });
+    }
 }
 
 -(void)sx_setLeftBarButtonItem:(UIBarButtonItem *)leftBarButtonItem {
-    if (sx_deviceVersion >= 11) {
-        [self sx_setLeftBarButtonItem:leftBarButtonItem];
-    } else {
-        if (![UINavigationConfig shared].sx_disableFixSpace && leftBarButtonItem) {//存在按钮且需要调节
-            [self setLeftBarButtonItems:@[leftBarButtonItem]];
-        } else {//不存在按钮,或者不需要调节
-            [self sx_setLeftBarButtonItem:leftBarButtonItem];
-        }
-    }
-}
-
--(void)sx_setLeftBarButtonItems:(NSArray<UIBarButtonItem *> *)leftBarButtonItems {
-    if (sx_deviceVersion >= 11) {
-        [self sx_setLeftBarButtonItems:leftBarButtonItems];
-    } else {
-        if (leftBarButtonItems.count) {
-            
-            UIBarButtonItem *firstItem = leftBarButtonItems.firstObject;
-            if (firstItem != nil
-                && firstItem.image == nil
-                && firstItem.title == nil
-                && firstItem.customView == nil)  {
-                // 第一个item 为spcae
-                [self sx_setLeftBarButtonItems:leftBarButtonItems];
-                return;
-            }
-            
-            NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_fixedSpaceWidth]];//可修正iOS11之前的偏移
-            [items addObjectsFromArray:leftBarButtonItems];
-            [self sx_setLeftBarButtonItems:items];
-        } else {
-            [self sx_setLeftBarButtonItems:leftBarButtonItems];
-        }
-    }
+    [self setLeftBarButtonItem:leftBarButtonItem animated:NO];
 }
 
 -(void)sx_setLeftBarButtonItem:(UIBarButtonItem *)leftBarButtonItem animated:(BOOL)animated {
-    if (sx_deviceVersion >= 11) {
+    if (!sx_disableFixSpace && leftBarButtonItem) {//存在按钮且需要调节
+        [self setLeftBarButtonItems:@[leftBarButtonItem] animated:animated];
+    } else {//不存在按钮,或者不需要调节
         [self sx_setLeftBarButtonItem:leftBarButtonItem animated:animated];
-    } else {
-        if (![UINavigationConfig shared].sx_disableFixSpace && leftBarButtonItem) {//存在按钮且需要调节
-            [self setLeftBarButtonItems:@[leftBarButtonItem] animated:animated];
-        } else {//不存在按钮,或者不需要调节
-            [self sx_setLeftBarButtonItem:leftBarButtonItem animated:animated];
-        }
     }
 }
 
+
+-(void)sx_setLeftBarButtonItems:(NSArray<UIBarButtonItem *> *)leftBarButtonItems {
+    [self setLeftBarButtonItems:leftBarButtonItems animated:NO];
+}
+
 -(void)sx_setLeftBarButtonItems:(NSArray<UIBarButtonItem *> *)leftBarButtonItems animated:(BOOL)animated {
-    if (sx_deviceVersion >= 11) {
-        [self sx_setLeftBarButtonItems:leftBarButtonItems animated:animated];
-    } else {
-        if (leftBarButtonItems.count) {
-            UIBarButtonItem *firstItem = leftBarButtonItems.firstObject;
-            if (firstItem != nil
-                && firstItem.image == nil
-                && firstItem.title == nil
-                && firstItem.customView == nil)  {
-                // 第一个item 为spcae
-                [self sx_setLeftBarButtonItems:leftBarButtonItems animated:animated];
-                return;
-            }
-            NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_fixedSpaceWidth]];//可修正iOS11之前的偏移
-            [items addObjectsFromArray:leftBarButtonItems];
-            [self sx_setLeftBarButtonItems:items animated:animated];
-        } else {
+    if (leftBarButtonItems.count) {
+        UIBarButtonItem *firstItem = leftBarButtonItems.firstObject;
+        if (firstItem.tag == UIBarButtonSystemItemFixedSpace) {//已经存在space
             [self sx_setLeftBarButtonItems:leftBarButtonItems animated:animated];
+        } else {
+            NSMutableArray *items = [NSMutableArray arrayWithArray:leftBarButtonItems];
+            [items insertObject:[self fixedSpaceWithWidth:sx_fixedSpaceWidth] atIndex:0];
+            [self sx_setLeftBarButtonItems:items animated:animated];
         }
+    } else {
+        [self sx_setLeftBarButtonItems:leftBarButtonItems animated:animated];
     }
 }
 
 -(void)sx_setRightBarButtonItem:(UIBarButtonItem *)rightBarButtonItem{
-    if (sx_deviceVersion >= 11) {
-        [self sx_setRightBarButtonItem:rightBarButtonItem];
-    } else {
-        if (![UINavigationConfig shared].sx_disableFixSpace && rightBarButtonItem) {//存在按钮且需要调节
-            [self setRightBarButtonItems:@[rightBarButtonItem]];
-        } else {//不存在按钮,或者不需要调节
-            [self sx_setRightBarButtonItem:rightBarButtonItem];
-        }
+    [self setRightBarButtonItem:rightBarButtonItem animated:NO];
+}
+
+- (void)sx_setRightBarButtonItem:(UIBarButtonItem *)rightBarButtonItem animated:(BOOL)animated {
+    if (!sx_disableFixSpace && rightBarButtonItem) {//存在按钮且需要调节
+        [self setRightBarButtonItems:@[rightBarButtonItem] animated:animated];
+    } else {//不存在按钮,或者不需要调节
+        [self sx_setRightBarButtonItem:rightBarButtonItem animated:animated];
     }
 }
 
 -(void)sx_setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)rightBarButtonItems{
-    if (sx_deviceVersion >= 11) {
-        [self sx_setRightBarButtonItems:rightBarButtonItems];
-    } else {
-        if (rightBarButtonItems.count) {
-            UIBarButtonItem *firstItem = rightBarButtonItems.firstObject;
-            if (firstItem != nil
-                && firstItem.image == nil
-                && firstItem.title == nil
-                && firstItem.customView == nil)  {
-                // 第一个item 为spcae
-                [self sx_setRightBarButtonItems:rightBarButtonItems];
-                return;
-            }
-            NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_fixedSpaceWidth]];//可修正iOS11之前的偏移
-            [items addObjectsFromArray:rightBarButtonItems];
-            [self sx_setRightBarButtonItems:items];
-        } else {
-            [self sx_setRightBarButtonItems:rightBarButtonItems];
-        }
-    }
-}
-
-- (void)sx_setRightBarButtonItem:(UIBarButtonItem *)rightBarButtonItem animated:(BOOL)animated {
-    if (sx_deviceVersion >= 11) {
-        [self sx_setRightBarButtonItem:rightBarButtonItem animated:animated];
-    } else {
-        if (![UINavigationConfig shared].sx_disableFixSpace && rightBarButtonItem) {//存在按钮且需要调节
-            [self setRightBarButtonItems:@[rightBarButtonItem] animated:animated];
-        } else {//不存在按钮,或者不需要调节
-            [self sx_setRightBarButtonItem:rightBarButtonItem animated:animated];
-        }
-    }
+    [self setRightBarButtonItems:rightBarButtonItems animated:NO];
 }
 
 - (void)sx_setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)rightBarButtonItems animated:(BOOL)animated {
-    if (sx_deviceVersion >= 11) {
-        [self sx_setRightBarButtonItems:rightBarButtonItems animated:animated];
-    } else {
-        if (rightBarButtonItems.count) {
-            UIBarButtonItem *firstItem = rightBarButtonItems.firstObject;
-            if (firstItem != nil
-                && firstItem.image == nil
-                && firstItem.title == nil
-                && firstItem.customView == nil)  {
-                // 第一个item 为spcae
-                [self sx_setRightBarButtonItems:rightBarButtonItems animated:animated];
-                return;
-            }
-            NSMutableArray *items = [NSMutableArray arrayWithObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_fixedSpaceWidth]];//可修正iOS11之前的偏移
-            [items addObjectsFromArray:rightBarButtonItems];
-            [self sx_setRightBarButtonItems:items animated:animated];
-        } else {
+    if (rightBarButtonItems.count) {
+        UIBarButtonItem *firstItem = rightBarButtonItems.firstObject;
+        if (firstItem.tag == UIBarButtonSystemItemFixedSpace) {//已经存在space
             [self sx_setRightBarButtonItems:rightBarButtonItems animated:animated];
+        } else {
+            NSMutableArray *items = [NSMutableArray arrayWithArray:rightBarButtonItems];
+            [items insertObject:[self fixedSpaceWithWidth:sx_fixedSpaceWidth] atIndex:0];
+            [self sx_setRightBarButtonItems:items animated:animated];
         }
+    } else {
+        [self sx_setRightBarButtonItems:rightBarButtonItems animated:animated];
     }
+}
+
+- (UIBarButtonItem *)sx_initWithBarButtonSystemItem:(UIBarButtonSystemItem)systemItem target:(nullable id)target action:(nullable SEL)action {
+    UIBarButtonItem *item = [self sx_initWithBarButtonSystemItem:systemItem target:target action:action];
+    if (systemItem == UIBarButtonSystemItemFixedSpace) {
+        item.tag = UIBarButtonSystemItemFixedSpace;
+    }
+    return item;
 }
 
 -(UIBarButtonItem *)fixedSpaceWithWidth:(CGFloat)width {

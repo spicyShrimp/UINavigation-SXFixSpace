@@ -10,28 +10,31 @@
 #import "UINavigationConfig.h"
 #import "NSObject+SXRuntime.h"
 
-#ifndef sx_deviceVersion
-#define sx_deviceVersion [[[UIDevice currentDevice] systemVersion] floatValue]
-#endif
-
 @implementation UINavigationBar (SXFixSpace)
 
 +(void)load {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [self swizzleInstanceMethodWithOriginSel:@selector(layoutSubviews)
-                                     swizzledSel:@selector(sx_layoutSubviews)];
-    });
+    if (@available(iOS 11.0, *)) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            NSArray <NSString *>*oriSels = @[
+                                             @"layoutSubviews"
+                                             ];
+            
+            [oriSels enumerateObjectsUsingBlock:^(NSString * _Nonnull oriSel, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSString *swiSel = [NSString stringWithFormat:@"sx_%@", oriSel];
+                [self swizzleInstanceMethodWithOriginSel:NSSelectorFromString(oriSel)
+                                             swizzledSel:NSSelectorFromString(swiSel)];
+            }];
+        });
+    }
 }
 
 -(void)sx_layoutSubviews{
     [self sx_layoutSubviews];
-    if (sx_deviceVersion >= 11 && ![UINavigationConfig shared].sx_disableFixSpace) {//需要调节
-//        self.layoutMargins = UIEdgeInsetsZero;
-        CGFloat space = [UINavigationConfig shared].sx_defaultFixSpace;
+    if (!sx_disableFixSpace) {//需要调节
         for (UIView *subview in self.subviews) {
             if ([NSStringFromClass(subview.class) containsString:@"ContentView"]) {
-                subview.layoutMargins = UIEdgeInsetsMake(0, space, 0, space);//可修正iOS11之后的偏移
+                subview.layoutMargins = UIEdgeInsetsMake(0, sx_defaultFixSpace, 0, sx_defaultFixSpace);
                 break;
             }
         }
