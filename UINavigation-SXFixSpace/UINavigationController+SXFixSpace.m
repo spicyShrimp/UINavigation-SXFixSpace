@@ -52,11 +52,6 @@ static BOOL sx_tempDisableFixSpace = NO;
         sx_disableFixSpace = YES;
     }
     [self sx_viewWillAppear:animated];
-    if (@available(iOS 11.0, *)) {
-        if (!animated) {
-            [self.navigationBar layoutSubviews];
-        }
-    }
 }
 
 -(void)sx_viewWillDisappear:(BOOL)animated{
