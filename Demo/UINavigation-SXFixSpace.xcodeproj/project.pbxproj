@@ -18,6 +18,7 @@
 		5683AFBF1F8DD506004055EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5683AFBD1F8DD506004055EF /* LaunchScreen.storyboard */; };
 		5683AFC21F8DD506004055EF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5683AFC11F8DD506004055EF /* main.m */; };
 		5683AFD31F8DD521004055EF /* UIBarButtonItem+SXCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5683AFCE1F8DD521004055EF /* UIBarButtonItem+SXCreate.m */; };
+		56C988BB22602DD90027337C /* UINavigationConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C988BA22602DD90027337C /* UINavigationConfig.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		5683AFC11F8DD506004055EF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5683AFCE1F8DD521004055EF /* UIBarButtonItem+SXCreate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+SXCreate.m"; sourceTree = "<group>"; };
 		5683AFCF1F8DD521004055EF /* UIBarButtonItem+SXCreate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+SXCreate.h"; sourceTree = "<group>"; };
+		56C988BA22602DD90027337C /* UINavigationConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UINavigationConfig.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				5632626D2089A6C400F2B455 /* UINavigationConfig.h */,
+				56C988BA22602DD90027337C /* UINavigationConfig.m */,
 				563262682089A6C400F2B455 /* NSObject+SXRuntime.h */,
 				5632626E2089A6C400F2B455 /* NSObject+SXRuntime.m */,
 				5632626A2089A6C400F2B455 /* UINavigationBar+SXFixSpace.h */,
@@ -181,6 +184,7 @@
 				563262702089A6C400F2B455 /* UINavigationItem+SXFixSpace.m in Sources */,
 				563262722089A6C400F2B455 /* UINavigationController+SXFixSpace.m in Sources */,
 				5683AFB71F8DD506004055EF /* ViewController.m in Sources */,
+				56C988BB22602DD90027337C /* UINavigationConfig.m in Sources */,
 				5632626F2089A6C400F2B455 /* UINavigationBar+SXFixSpace.m in Sources */,
 				5683AFC21F8DD506004055EF /* main.m in Sources */,
 				5683AFD31F8DD521004055EF /* UIBarButtonItem+SXCreate.m in Sources */,

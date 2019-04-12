@@ -31,10 +31,11 @@
 
 -(void)sx_layoutSubviews{
     [self sx_layoutSubviews];
-    if (!sx_disableFixSpace) {//需要调节
+    if (![UINavigationConfig shared].sx_disableFixSpace) {//需要调节
+        CGFloat space = [UINavigationConfig shared].sx_defaultFixSpace;
         for (UIView *subview in self.subviews) {
             if ([NSStringFromClass(subview.class) containsString:@"ContentView"]) {
-                subview.layoutMargins = UIEdgeInsetsMake(0, sx_defaultFixSpace, 0, sx_defaultFixSpace);
+                subview.layoutMargins = UIEdgeInsetsMake(0, space, 0, space);
                 break;
             }
         }

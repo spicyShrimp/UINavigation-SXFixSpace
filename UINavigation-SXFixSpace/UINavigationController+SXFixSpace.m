@@ -48,15 +48,15 @@ static BOOL sx_tempDisableFixSpace = NO;
 
 -(void)sx_viewWillAppear:(BOOL)animated {
     if ([self isKindOfClass:[UIImagePickerController class]]) {
-        sx_tempDisableFixSpace = sx_disableFixSpace;
-        sx_disableFixSpace = YES;
+        sx_tempDisableFixSpace = [UINavigationConfig shared].sx_disableFixSpace;
+        [UINavigationConfig shared].sx_disableFixSpace = YES;
     }
     [self sx_viewWillAppear:animated];
 }
 
 -(void)sx_viewWillDisappear:(BOOL)animated{
     if ([self isKindOfClass:[UIImagePickerController class]]) {
-        sx_disableFixSpace = sx_tempDisableFixSpace;
+        [UINavigationConfig shared].sx_disableFixSpace = sx_tempDisableFixSpace;
     }
     [self sx_viewWillDisappear:animated];
 }
@@ -64,49 +64,39 @@ static BOOL sx_tempDisableFixSpace = NO;
 //FIXME:修正iOS11之后push或者pop动画为NO 系统不主动调用UINavigationBar的layoutSubviews方法
 -(void)sx_pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     [self sx_pushViewController:viewController animated:animated];
-    if (!sx_disableFixSpace) {
-        if (!animated) {
-            [self.navigationBar layoutSubviews];
-        }
+    if (![UINavigationConfig shared].sx_disableFixSpace && !animated) {
+        [self.navigationBar layoutSubviews];
     }
 }
 
 - (nullable UIViewController *)sx_popViewControllerAnimated:(BOOL)animated {
     UIViewController *vc = [self sx_popViewControllerAnimated:animated];
-    if (!sx_disableFixSpace) {
-        if (!animated) {
-            [self.navigationBar layoutSubviews];
-        }
+    if (![UINavigationConfig shared].sx_disableFixSpace && !animated) {
+        [self.navigationBar layoutSubviews];
     }
     return vc;
 }
 
 - (nullable NSArray<__kindof UIViewController *> *)sx_popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
     NSArray *vcs = [self sx_popToViewController:viewController animated:animated];
-    if (!sx_disableFixSpace) {
-        if (!animated) {
-            [self.navigationBar layoutSubviews];
-        }
+    if (![UINavigationConfig shared].sx_disableFixSpace && !animated) {
+        [self.navigationBar layoutSubviews];
     }
     return vcs;
 }
 
 - (nullable NSArray<__kindof UIViewController *> *)sx_popToRootViewControllerAnimated:(BOOL)animated {
     NSArray *vcs = [self sx_popToRootViewControllerAnimated:animated];
-    if (!sx_disableFixSpace) {
-        if (!animated) {
-            [self.navigationBar layoutSubviews];
-        }
+    if (![UINavigationConfig shared].sx_disableFixSpace && !animated) {
+        [self.navigationBar layoutSubviews];
     }
     return vcs;
 }
 
 - (void)sx_setViewControllers:(NSArray<UIViewController *> *)viewControllers animated:(BOOL)animated {
     [self sx_setViewControllers:viewControllers animated:animated];
-    if (!sx_disableFixSpace) {
-        if (!animated) {
-            [self.navigationBar layoutSubviews];
-        }
+    if (![UINavigationConfig shared].sx_disableFixSpace && !animated) {
+        [self.navigationBar layoutSubviews];
     }
 }
 

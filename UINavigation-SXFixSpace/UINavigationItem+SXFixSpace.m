@@ -46,7 +46,7 @@
 }
 
 -(void)sx_setLeftBarButtonItem:(UIBarButtonItem *)leftBarButtonItem animated:(BOOL)animated {
-    if (!sx_disableFixSpace && leftBarButtonItem) {//存在按钮且需要调节
+    if (![UINavigationConfig shared].sx_disableFixSpace && leftBarButtonItem) {//存在按钮且需要调节
         [self setLeftBarButtonItems:@[leftBarButtonItem] animated:animated];
     } else {//不存在按钮,或者不需要调节
         [self sx_setLeftBarButtonItem:leftBarButtonItem animated:animated];
@@ -61,11 +61,11 @@
 -(void)sx_setLeftBarButtonItems:(NSArray<UIBarButtonItem *> *)leftBarButtonItems animated:(BOOL)animated {
     if (leftBarButtonItems.count) {
         UIBarButtonItem *firstItem = leftBarButtonItems.firstObject;
-        if (firstItem.width == sx_fixedSpaceWidth) {//已经存在space
+        if (firstItem.width == [UINavigationConfig shared].sx_fixedSpaceWidth) {//已经存在space
             [self sx_setLeftBarButtonItems:leftBarButtonItems animated:animated];
         } else {
             NSMutableArray *items = [NSMutableArray arrayWithArray:leftBarButtonItems];
-            [items insertObject:[self fixedSpaceWithWidth:sx_fixedSpaceWidth] atIndex:0];
+            [items insertObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_fixedSpaceWidth] atIndex:0];
             [self sx_setLeftBarButtonItems:items animated:animated];
         }
     } else {
@@ -78,7 +78,7 @@
 }
 
 - (void)sx_setRightBarButtonItem:(UIBarButtonItem *)rightBarButtonItem animated:(BOOL)animated {
-    if (!sx_disableFixSpace && rightBarButtonItem) {//存在按钮且需要调节
+    if (![UINavigationConfig shared].sx_disableFixSpace && rightBarButtonItem) {//存在按钮且需要调节
         [self setRightBarButtonItems:@[rightBarButtonItem] animated:animated];
     } else {//不存在按钮,或者不需要调节
         [self sx_setRightBarButtonItem:rightBarButtonItem animated:animated];
@@ -92,11 +92,11 @@
 - (void)sx_setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)rightBarButtonItems animated:(BOOL)animated {
     if (rightBarButtonItems.count) {
         UIBarButtonItem *firstItem = rightBarButtonItems.firstObject;
-        if (firstItem.width == sx_fixedSpaceWidth) {//已经存在space
+        if (firstItem.width == [UINavigationConfig shared].sx_fixedSpaceWidth) {//已经存在space
             [self sx_setRightBarButtonItems:rightBarButtonItems animated:animated];
         } else {
             NSMutableArray *items = [NSMutableArray arrayWithArray:rightBarButtonItems];
-            [items insertObject:[self fixedSpaceWithWidth:sx_fixedSpaceWidth] atIndex:0];
+            [items insertObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_fixedSpaceWidth] atIndex:0];
             [self sx_setRightBarButtonItems:items animated:animated];
         }
     } else {
