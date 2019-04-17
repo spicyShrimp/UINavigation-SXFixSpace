@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		5632626F2089A6C400F2B455 /* UINavigationBar+SXFixSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 563262652089A6C400F2B455 /* UINavigationBar+SXFixSpace.m */; };
 		563262702089A6C400F2B455 /* UINavigationItem+SXFixSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 563262662089A6C400F2B455 /* UINavigationItem+SXFixSpace.m */; };
-		563262722089A6C400F2B455 /* UINavigationController+SXFixSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 5632626B2089A6C400F2B455 /* UINavigationController+SXFixSpace.m */; };
+		563262722089A6C400F2B455 /* UIViewController+SXFixSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 5632626B2089A6C400F2B455 /* UIViewController+SXFixSpace.m */; };
 		563262732089A6C400F2B455 /* NSObject+SXRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5632626E2089A6C400F2B455 /* NSObject+SXRuntime.m */; };
 		5683AFB41F8DD506004055EF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5683AFB31F8DD506004055EF /* AppDelegate.m */; };
 		5683AFB71F8DD506004055EF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5683AFB61F8DD506004055EF /* ViewController.m */; };
@@ -24,10 +24,10 @@
 /* Begin PBXFileReference section */
 		563262652089A6C400F2B455 /* UINavigationBar+SXFixSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+SXFixSpace.m"; sourceTree = "<group>"; };
 		563262662089A6C400F2B455 /* UINavigationItem+SXFixSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationItem+SXFixSpace.m"; sourceTree = "<group>"; };
-		563262672089A6C400F2B455 /* UINavigationController+SXFixSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+SXFixSpace.h"; sourceTree = "<group>"; };
+		563262672089A6C400F2B455 /* UIViewController+SXFixSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SXFixSpace.h"; sourceTree = "<group>"; };
 		563262682089A6C400F2B455 /* NSObject+SXRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SXRuntime.h"; sourceTree = "<group>"; };
 		5632626A2089A6C400F2B455 /* UINavigationBar+SXFixSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+SXFixSpace.h"; sourceTree = "<group>"; };
-		5632626B2089A6C400F2B455 /* UINavigationController+SXFixSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+SXFixSpace.m"; sourceTree = "<group>"; };
+		5632626B2089A6C400F2B455 /* UIViewController+SXFixSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SXFixSpace.m"; sourceTree = "<group>"; };
 		5632626C2089A6C400F2B455 /* UINavigationItem+SXFixSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationItem+SXFixSpace.h"; sourceTree = "<group>"; };
 		5632626D2089A6C400F2B455 /* UINavigationConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UINavigationConfig.h; sourceTree = "<group>"; };
 		5632626E2089A6C400F2B455 /* NSObject+SXRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SXRuntime.m"; sourceTree = "<group>"; };
@@ -66,8 +66,8 @@
 				5632626E2089A6C400F2B455 /* NSObject+SXRuntime.m */,
 				5632626A2089A6C400F2B455 /* UINavigationBar+SXFixSpace.h */,
 				563262652089A6C400F2B455 /* UINavigationBar+SXFixSpace.m */,
-				563262672089A6C400F2B455 /* UINavigationController+SXFixSpace.h */,
-				5632626B2089A6C400F2B455 /* UINavigationController+SXFixSpace.m */,
+				563262672089A6C400F2B455 /* UIViewController+SXFixSpace.h */,
+				5632626B2089A6C400F2B455 /* UIViewController+SXFixSpace.m */,
 				5632626C2089A6C400F2B455 /* UINavigationItem+SXFixSpace.h */,
 				563262662089A6C400F2B455 /* UINavigationItem+SXFixSpace.m */,
 			);
@@ -182,7 +182,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				563262702089A6C400F2B455 /* UINavigationItem+SXFixSpace.m in Sources */,
-				563262722089A6C400F2B455 /* UINavigationController+SXFixSpace.m in Sources */,
+				563262722089A6C400F2B455 /* UIViewController+SXFixSpace.m in Sources */,
 				5683AFB71F8DD506004055EF /* ViewController.m in Sources */,
 				56C988BB22602DD90027337C /* UINavigationConfig.m in Sources */,
 				5632626F2089A6C400F2B455 /* UINavigationBar+SXFixSpace.m in Sources */,

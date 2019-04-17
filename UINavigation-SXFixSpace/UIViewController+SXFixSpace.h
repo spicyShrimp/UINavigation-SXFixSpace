@@ -1,5 +1,5 @@
 //
-//  UINavigationController+SXFixSpace.h
+//  UIViewController+SXFixSpace.h
 //  UINavigation-SXFixSpace
 //
 //  Created by charles on 2018/4/20.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UINavigationController (SXFixSpace)
+@interface UIViewController (SXFixSpace)
 
 @end
