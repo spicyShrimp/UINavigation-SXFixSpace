@@ -8,8 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, DemoVCType) {
+    DemoVCTypeIntoAlbum = 0,
+    DemoVCTypeSysBack,
+    DemoVCTypeCustomBack,
+};
+
 @interface ViewController : UIViewController
 
+@property (nonatomic, assign) DemoVCType type;
+@property (nonatomic, strong) NSString *titleString;
+@property (nonatomic, assign) BOOL animated;
 
 @end
 
