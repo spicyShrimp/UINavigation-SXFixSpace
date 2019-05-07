@@ -17,14 +17,11 @@
     if (@available(iOS 11.0, *)) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            NSArray <NSString *>*oriSels = @[
-                                             @"layoutSubviews"
-                                             ];
+            NSArray <NSString *>*oriSels = @[@"layoutSubviews"];
             
             [oriSels enumerateObjectsUsingBlock:^(NSString * _Nonnull oriSel, NSUInteger idx, BOOL * _Nonnull stop) {
                 NSString *swiSel = [NSString stringWithFormat:@"sx_%@", oriSel];
-                [self swizzleInstanceMethodWithOriginSel:NSSelectorFromString(oriSel)
-                                             swizzledSel:NSSelectorFromString(swiSel)];
+                [self swizzleInstanceMethodWithOriginSel:NSSelectorFromString(oriSel) swizzledSel:NSSelectorFromString(swiSel)];
             }];
         });
     }

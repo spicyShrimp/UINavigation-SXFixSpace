@@ -132,7 +132,8 @@
     if (indexPath.row == DemoVCTypeIntoAlbum) {
         self.animated = animated;
         UIImagePickerController *pick = [[UIImagePickerController alloc]init];
-        [UINavigationConfig shared].sx_disableFixSpace = YES;
+//        [UINavigationConfig shared].sx_disableFixSpace = YES;
+        [UINavigationConfig shared].sx_defaultFixSpace = 10;
         pick.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         pick.delegate = self;
         [self presentViewController:pick animated:animated completion:nil];
@@ -151,13 +152,15 @@
 
 #pragma mark - UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    [UINavigationConfig shared].sx_disableFixSpace = NO;
+//    [UINavigationConfig shared].sx_disableFixSpace = NO;
+    [UINavigationConfig shared].sx_defaultFixSpace = 0;
     [picker dismissViewControllerAnimated:self.animated completion:nil];
     
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [UINavigationConfig shared].sx_disableFixSpace = NO;
+//    [UINavigationConfig shared].sx_disableFixSpace = NO;
+    [UINavigationConfig shared].sx_defaultFixSpace = 0;
     [picker dismissViewControllerAnimated:self.animated completion:nil];
 }
 

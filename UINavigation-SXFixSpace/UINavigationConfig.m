@@ -29,7 +29,6 @@
 
 -(void)configBase {
     self.sx_defaultFixSpace = 0.f;
-    self.sx_fixedSpaceWidth = -20.f;
     self.sx_disableFixSpace = NO;
 }
 

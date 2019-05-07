@@ -15,15 +15,12 @@
 +(void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSArray <NSString *>*oriSels = @[
-                                         @"viewWillAppear:"
-                                         ];
+        NSArray <NSString *>*oriSels = @[@"viewWillAppear:"];
 
         
         [oriSels enumerateObjectsUsingBlock:^(NSString * _Nonnull oriSel, NSUInteger idx, BOOL * _Nonnull stop) {
             NSString *swiSel = [NSString stringWithFormat:@"sx_%@", oriSel];
-            [self swizzleInstanceMethodWithOriginSel:NSSelectorFromString(oriSel)
-                                         swizzledSel:NSSelectorFromString(swiSel)];
+            [self swizzleInstanceMethodWithOriginSel:NSSelectorFromString(oriSel) swizzledSel:NSSelectorFromString(swiSel)];
         }];
     });
 }
