@@ -12,8 +12,6 @@
 
 @implementation UINavigationItem (SXFixSpace)
 
-
-
 +(void)load {
     if (@available(iOS 11.0, *)) {
         
@@ -59,7 +57,7 @@
 }
 
 -(void)sx_setLeftBarButtonItems:(NSArray<UIBarButtonItem *> *)leftBarButtonItems animated:(BOOL)animated {
-    if (leftBarButtonItems.count) {
+    if (![UINavigationConfig shared].sx_disableFixSpace && leftBarButtonItems.count) {//存在按钮且需要调节
         UIBarButtonItem *firstItem = leftBarButtonItems.firstObject;
         if (firstItem.width == [UINavigationConfig shared].sx_fixedSpaceWidth) {//已经存在space
             [self sx_setLeftBarButtonItems:leftBarButtonItems animated:animated];
@@ -68,7 +66,7 @@
             [items insertObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_fixedSpaceWidth] atIndex:0];
             [self sx_setLeftBarButtonItems:items animated:animated];
         }
-    } else {
+    } else {//不存在按钮,或者不需要调节
         [self sx_setLeftBarButtonItems:leftBarButtonItems animated:animated];
     }
 }
@@ -90,7 +88,7 @@
 }
 
 - (void)sx_setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)rightBarButtonItems animated:(BOOL)animated {
-    if (rightBarButtonItems.count) {
+    if (![UINavigationConfig shared].sx_disableFixSpace && rightBarButtonItems.count) {//存在按钮且需要调节
         UIBarButtonItem *firstItem = rightBarButtonItems.firstObject;
         if (firstItem.width == [UINavigationConfig shared].sx_fixedSpaceWidth) {//已经存在space
             [self sx_setRightBarButtonItems:rightBarButtonItems animated:animated];
@@ -99,7 +97,7 @@
             [items insertObject:[self fixedSpaceWithWidth:[UINavigationConfig shared].sx_fixedSpaceWidth] atIndex:0];
             [self sx_setRightBarButtonItems:items animated:animated];
         }
-    } else {
+    } else {//不存在按钮,或者不需要调节
         [self sx_setRightBarButtonItems:rightBarButtonItems animated:animated];
     }
 }

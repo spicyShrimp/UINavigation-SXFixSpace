@@ -9,6 +9,7 @@
 #import "UINavigationBar+SXFixSpace.h"
 #import "UINavigationConfig.h"
 #import "NSObject+SXRuntime.h"
+#import <objc/runtime.h>
 
 @implementation UINavigationBar (SXFixSpace)
 

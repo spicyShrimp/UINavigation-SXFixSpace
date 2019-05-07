@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "UINavigation-SXFixSpace"
-  s.version      = "1.1.5"
+  s.version      = "1.1.6"
   s.summary      = "新的导航栏按钮位置偏移的解决方案."
   s.description  = "新的导航栏按钮位置偏移的解决方案,兼容iOS11,可自定义间距,同时兼容性更好."
   s.homepage     = "https://github.com/spicyShrimp/UINavigation-SXFixSpace"

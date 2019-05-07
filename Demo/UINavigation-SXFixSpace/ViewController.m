@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "UIBarButtonItem+SXCreate.h"
+#import "UINavigationConfig.h"
 
 @interface ViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
@@ -131,6 +132,7 @@
     if (indexPath.row == DemoVCTypeIntoAlbum) {
         self.animated = animated;
         UIImagePickerController *pick = [[UIImagePickerController alloc]init];
+        [UINavigationConfig shared].sx_disableFixSpace = YES;
         pick.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         pick.delegate = self;
         [self presentViewController:pick animated:animated completion:nil];
@@ -149,11 +151,13 @@
 
 #pragma mark - UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    [UINavigationConfig shared].sx_disableFixSpace = NO;
     [picker dismissViewControllerAnimated:self.animated completion:nil];
     
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [UINavigationConfig shared].sx_disableFixSpace = NO;
     [picker dismissViewControllerAnimated:self.animated completion:nil];
 }
 
