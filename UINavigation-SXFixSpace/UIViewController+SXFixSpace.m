@@ -7,7 +7,6 @@
 //
 
 #import "UIViewController+SXFixSpace.h"
-#import <UIKit/UIImagePickerController.h>
 #import "UINavigationConfig.h"
 #import "NSObject+SXRuntime.h"
 
@@ -34,7 +33,7 @@ static BOOL sx_tempDisableFixSpace = NO;
 
 
 -(void)sx_viewWillAppear:(BOOL)animated {
-    if ([self isKindOfClass:[UIImagePickerController class]]) {
+    if ([self isKindOfClass:[UIImagePickerController class]] && ![UINavigationConfig shared].sx_disableResetImagePickerSpace) {
         sx_tempDisableFixSpace = [UINavigationConfig shared].sx_disableFixSpace;
         [UINavigationConfig shared].sx_disableFixSpace = YES;
     }
@@ -47,7 +46,7 @@ static BOOL sx_tempDisableFixSpace = NO;
 }
 
 -(void)sx_viewWillDisappear:(BOOL)animated{
-    if ([self isKindOfClass:[UIImagePickerController class]]) {
+    if ([self isKindOfClass:[UIImagePickerController class]] && ![UINavigationConfig shared].sx_disableResetImagePickerSpace) {
         [UINavigationConfig shared].sx_disableFixSpace = sx_tempDisableFixSpace;
     }
     [self sx_viewWillDisappear:animated];

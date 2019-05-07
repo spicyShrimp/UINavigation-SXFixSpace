@@ -7,8 +7,8 @@
 //
 
 #import "UINavigationItem+SXFixSpace.h"
-#import "NSObject+SXRuntime.h"
 #import "UINavigationConfig.h"
+#import "NSObject+SXRuntime.h"
 
 @implementation UINavigationItem (SXFixSpace)
 

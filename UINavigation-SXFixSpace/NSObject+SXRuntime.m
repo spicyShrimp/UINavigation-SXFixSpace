@@ -9,14 +9,8 @@
 #import "NSObject+SXRuntime.h"
 #import <objc/runtime.h>
 
-char * const kProtectCrashProtectorName = "kProtectCrashProtector";
-
-void ProtectCrashProtected(id self, SEL sel) {
-}
-
 @implementation NSObject (SXRuntime)
 
-// MARK: Util
 + (void)swizzleClassMethodWithOriginSel:(SEL)oriSel swizzledSel:(SEL)swiSel {
     Class cls = object_getClass(self);
     
@@ -45,29 +39,6 @@ void ProtectCrashProtected(id self, SEL sel) {
     } else {
         method_exchangeImplementations(oriMethod, swizzledMethod);
     }
-}
-
-+ (Class)addMethodToStubClass:(SEL)aSelector {
-    Class ProtectCrashProtector = objc_getClass(kProtectCrashProtectorName);
-    
-    if (!ProtectCrashProtector) {
-        ProtectCrashProtector = objc_allocateClassPair([NSObject class], kProtectCrashProtectorName, sizeof([NSObject class]));
-        objc_registerClassPair(ProtectCrashProtector);
-    }
-    
-    class_addMethod(ProtectCrashProtector, aSelector, (IMP)ProtectCrashProtected, "v@:");
-    return ProtectCrashProtector;
-}
-
-- (BOOL)isMethodOverride:(Class)cls selector:(SEL)sel {
-    IMP clsIMP = class_getMethodImplementation(cls, sel);
-    IMP superClsIMP = class_getMethodImplementation([cls superclass], sel);
-    
-    return clsIMP != superClsIMP;
-}
-
-+ (BOOL)isMainBundleClass:(Class)cls {
-    return cls && [[NSBundle bundleForClass:cls] isEqual:[NSBundle mainBundle]];
 }
 
 @end;
