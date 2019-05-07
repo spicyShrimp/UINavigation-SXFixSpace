@@ -12,9 +12,9 @@
 
 @implementation UINavigationItem (SXFixSpace)
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 110000
 +(void)load {
     if (@available(iOS 11.0, *)) {
-        
     } else {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
@@ -31,7 +31,6 @@
                 NSString *swiSel = [NSString stringWithFormat:@"sx_%@", oriSel];
                 [self swizzleInstanceMethodWithOriginSel:NSSelectorFromString(oriSel) swizzledSel:NSSelectorFromString(swiSel)];
             }];
-            
         });
     }
 }
@@ -106,5 +105,6 @@
     fixedSpace.width = width;
     return fixedSpace;
 }
+#endif
 
 @end

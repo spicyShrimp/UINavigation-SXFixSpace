@@ -9,10 +9,10 @@
 #import "UINavigationBar+SXFixSpace.h"
 #import "UINavigationConfig.h"
 #import "NSObject+SXRuntime.h"
-#import <objc/runtime.h>
 
 @implementation UINavigationBar (SXFixSpace)
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 110000
 +(void)load {
     if (@available(iOS 11.0, *)) {
         static dispatch_once_t onceToken;
@@ -39,5 +39,6 @@
         }
     }
 }
+#endif
 
 @end
