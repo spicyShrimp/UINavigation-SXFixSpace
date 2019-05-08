@@ -12,24 +12,25 @@
 
 @implementation UINavigationItem (SXFixSpace)
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED < 110000
 +(void)load {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSArray <NSString *>*oriSels = @[@"setLeftBarButtonItem:",
-                                         @"setLeftBarButtonItem:animated:",
-                                         @"setLeftBarButtonItems:",
-                                         @"setLeftBarButtonItems:animated:",
-                                         @"setRightBarButtonItem:",
-                                         @"setRightBarButtonItem:animated:",
-                                         @"setRightBarButtonItems:",
-                                         @"setRightBarButtonItems:animated:"];
-        
-        [oriSels enumerateObjectsUsingBlock:^(NSString * _Nonnull oriSel, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSString *swiSel = [NSString stringWithFormat:@"sx_%@", oriSel];
-            [self swizzleInstanceMethodWithOriginSel:NSSelectorFromString(oriSel) swizzledSel:NSSelectorFromString(swiSel)];
-        }];
-    });
+    if (@available(iOS 11.0, *)) {} else {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            NSArray <NSString *>*oriSels = @[@"setLeftBarButtonItem:",
+                                             @"setLeftBarButtonItem:animated:",
+                                             @"setLeftBarButtonItems:",
+                                             @"setLeftBarButtonItems:animated:",
+                                             @"setRightBarButtonItem:",
+                                             @"setRightBarButtonItem:animated:",
+                                             @"setRightBarButtonItems:",
+                                             @"setRightBarButtonItems:animated:"];
+            
+            [oriSels enumerateObjectsUsingBlock:^(NSString * _Nonnull oriSel, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSString *swiSel = [NSString stringWithFormat:@"sx_%@", oriSel];
+                [self swizzleInstanceMethodWithOriginSel:NSSelectorFromString(oriSel) swizzledSel:NSSelectorFromString(swiSel)];
+            }];
+        });
+    }
 }
 
 -(void)sx_setLeftBarButtonItem:(UIBarButtonItem *)leftBarButtonItem {
@@ -52,7 +53,7 @@
 -(void)sx_setLeftBarButtonItems:(NSArray<UIBarButtonItem *> *)leftBarButtonItems animated:(BOOL)animated {
     if (![UINavigationConfig shared].sx_disableFixSpace && leftBarButtonItems.count) {//存在按钮且需要调节
         UIBarButtonItem *firstItem = leftBarButtonItems.firstObject;
-        CGFloat width = [UINavigationConfig shared].sx_defaultFixSpace - 20;
+        CGFloat width = [UINavigationConfig shared].sx_defaultFixSpace - self.fixedSpace;
         if (firstItem.width == width) {//已经存在space
             [self sx_setLeftBarButtonItems:leftBarButtonItems animated:animated];
         } else {
@@ -84,7 +85,7 @@
 - (void)sx_setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)rightBarButtonItems animated:(BOOL)animated {
     if (![UINavigationConfig shared].sx_disableFixSpace && rightBarButtonItems.count) {//存在按钮且需要调节
         UIBarButtonItem *firstItem = rightBarButtonItems.firstObject;
-        CGFloat width = [UINavigationConfig shared].sx_defaultFixSpace - 20;
+        CGFloat width = [UINavigationConfig shared].sx_defaultFixSpace - self.fixedSpace;
         if (firstItem.width == width) {//已经存在space
             [self sx_setRightBarButtonItems:rightBarButtonItems animated:animated];
         } else {
@@ -102,6 +103,10 @@
     fixedSpace.width = width;
     return fixedSpace;
 }
-#endif
+
+- (CGFloat)fixedSpace {
+    CGSize screentSize = [UIScreen mainScreen].bounds.size;
+    return MIN(screentSize.width, screentSize.height) > 375 ? 20 : 16;
+}
 
 @end
