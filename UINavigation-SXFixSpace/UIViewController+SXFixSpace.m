@@ -13,17 +13,15 @@
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 110000
 +(void)load {
-    if (@available(iOS 11.0, *)) {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            NSArray <NSString *>*oriSels = @[@"viewWillAppear:"];
-            
-            [oriSels enumerateObjectsUsingBlock:^(NSString * _Nonnull oriSel, NSUInteger idx, BOOL * _Nonnull stop) {
-                NSString *swiSel = [NSString stringWithFormat:@"sx_%@", oriSel];
-                [self swizzleInstanceMethodWithOriginSel:NSSelectorFromString(oriSel) swizzledSel:NSSelectorFromString(swiSel)];
-            }];
-        });
-    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSArray <NSString *>*oriSels = @[@"viewWillAppear:"];
+        
+        [oriSels enumerateObjectsUsingBlock:^(NSString * _Nonnull oriSel, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSString *swiSel = [NSString stringWithFormat:@"sx_%@", oriSel];
+            [self swizzleInstanceMethodWithOriginSel:NSSelectorFromString(oriSel) swizzledSel:NSSelectorFromString(swiSel)];
+        }];
+    });
 }
 
 
