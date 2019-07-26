@@ -46,13 +46,7 @@ void sx_swizzle(Class oldClass, NSString *oldSelector, Class newClass) {
 +(void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        if (@available(iOS 11.0, *)) {
-            NSDictionary <NSString *, NSString *>*oriSels = @{@"_UINavigationBarContentView": @"layoutSubviews",
-                                                              @"_UINavigationBarContentViewLayout": @"_updateMarginConstraints"};
-            [oriSels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull cls, NSString * _Nonnull oriSel, BOOL * _Nonnull stop) {
-                sx_swizzle(NSClassFromString(cls), oriSel, NSObject.class);
-            }];
-        } else {
+        if (@available(iOS 11.0, *)) {} else {
             NSArray <NSString *>*oriSels = @[@"setLeftBarButtonItem:",
                                              @"setLeftBarButtonItem:animated:",
                                              @"setLeftBarButtonItems:",
@@ -144,11 +138,24 @@ void sx_swizzle(Class oldClass, NSString *oldSelector, Class newClass) {
 
 @implementation NSObject (SXFixSpace)
 
++(void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (@available(iOS 11.0, *)) {
+            NSDictionary <NSString *, NSString *>*oriSels = @{@"_UINavigationBarContentView": @"layoutSubviews",
+                                                              @"_UINavigationBarContentViewLayout": @"_updateMarginConstraints"};
+            [oriSels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull cls, NSString * _Nonnull oriSel, BOOL * _Nonnull stop) {
+                sx_swizzle(NSClassFromString(cls), oriSel, self);
+            }];
+        }
+    });
+}
+
 - (void)sx_layoutSubviews {
     [self sx_layoutSubviews];
     if (UINavigationConfig.shared.sx_disableFixSpace) { return; }
     if (![NSStringFromClass(self.class) isEqualToString:@"_UINavigationBarContentView"]) { return; }
-    NSObject *layout = [self valueForKey:@"_layout"];
+    id layout = [self valueForKey:@"_layout"];
     if (!layout) { return; }
     SEL selector = NSSelectorFromString(@"_updateMarginConstraints");
     IMP imp = [layout methodForSelector:selector];
