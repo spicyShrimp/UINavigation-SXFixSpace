@@ -145,7 +145,7 @@ void sx_swizzle(Class oldClass, NSString *oldSelector, Class newClass) {
             NSDictionary <NSString *, NSString *>*oriSels = @{@"_UINavigationBarContentView": @"layoutSubviews",
                                                               @"_UINavigationBarContentViewLayout": @"_updateMarginConstraints"};
             [oriSels enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull cls, NSString * _Nonnull oriSel, BOOL * _Nonnull stop) {
-                sx_swizzle(NSClassFromString(cls), oriSel, self);
+                sx_swizzle(NSClassFromString(cls), oriSel, NSObject.class);
             }];
         }
     });
@@ -153,10 +153,10 @@ void sx_swizzle(Class oldClass, NSString *oldSelector, Class newClass) {
 
 - (void)sx_layoutSubviews {
     [self sx_layoutSubviews];
-    if (UINavigationConfig.shared.sx_disableFixSpace) { return; }
-    if (![NSStringFromClass(self.class) isEqualToString:@"_UINavigationBarContentView"]) { return; }
+    if (UINavigationConfig.shared.sx_disableFixSpace) return;
+    if (![self isMemberOfClass:NSClassFromString(@"_UINavigationBarContentView")]) return;
     id layout = [self valueForKey:@"_layout"];
-    if (!layout) { return; }
+    if (!layout) return;
     SEL selector = NSSelectorFromString(@"_updateMarginConstraints");
     IMP imp = [layout methodForSelector:selector];
     void (*func)(id, SEL) = (void *)imp;
@@ -165,16 +165,16 @@ void sx_swizzle(Class oldClass, NSString *oldSelector, Class newClass) {
 
 - (void)sx__updateMarginConstraints {
     [self sx__updateMarginConstraints];
-    if (UINavigationConfig.shared.sx_disableFixSpace) { return; }
-    if (![NSStringFromClass(self.class) isEqualToString:@"_UINavigationBarContentViewLayout"]) { return; }
+    if (UINavigationConfig.shared.sx_disableFixSpace) return;
+    if (![self isMemberOfClass:NSClassFromString(@"_UINavigationBarContentViewLayout")]) return;
     [self sx_adjustLeadingBarConstraints];
     [self sx_adjustTrailingBarConstraints];
 }
 
 - (void)sx_adjustLeadingBarConstraints {
-    if (UINavigationConfig.shared.sx_disableFixSpace) { return; }
+    if (UINavigationConfig.shared.sx_disableFixSpace) return;
     NSArray<NSLayoutConstraint *> *leadingBarConstraints = [self valueForKey:@"_leadingBarConstraints"];
-    if (!leadingBarConstraints) { return; }
+    if (!leadingBarConstraints) return;
     CGFloat constant = UINavigationConfig.shared.sx_defaultFixSpace - UINavigationConfig.shared.sx_systemSpace;
     for (NSLayoutConstraint *constraint in leadingBarConstraints) {
         if (constraint.firstAttribute == NSLayoutAttributeLeading &&
@@ -185,9 +185,9 @@ void sx_swizzle(Class oldClass, NSString *oldSelector, Class newClass) {
 }
 
 - (void)sx_adjustTrailingBarConstraints {
-    if (UINavigationConfig.shared.sx_disableFixSpace) { return; }
+    if (UINavigationConfig.shared.sx_disableFixSpace) return;
     NSArray<NSLayoutConstraint *> *trailingBarConstraints = [self valueForKey:@"_trailingBarConstraints"];
-    if (!trailingBarConstraints) { return; }
+    if (!trailingBarConstraints) return;
     CGFloat constant = UINavigationConfig.shared.sx_systemSpace - UINavigationConfig.shared.sx_defaultFixSpace;
     for (NSLayoutConstraint *constraint in trailingBarConstraints) {
         if (constraint.firstAttribute == NSLayoutAttributeTrailing &&
