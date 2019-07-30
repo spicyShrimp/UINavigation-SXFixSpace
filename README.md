@@ -7,6 +7,3 @@
 pod "UINavigation-SXFixSpace", "~> 1.2.4"
 ```
 
-Swift版本:
-https://github.com/spicyShrimp/UINavigation-SXFixSpace-Swift
-
