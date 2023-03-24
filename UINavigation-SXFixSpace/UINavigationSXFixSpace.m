@@ -36,7 +36,7 @@ void sx_swizzle(Class oldClass, NSString *oldSelector, Class newClass) {
 }
 
 - (CGFloat)sx_systemSpace {
-    return MIN([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) > 375 ? 20 : 16;
+    return MIN([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) > 393 ? 20 : 16;
 }
 
 @end
